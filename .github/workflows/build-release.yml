@@ -25,6 +25,11 @@ jobs:
         with:
           node-version: 20.x
 
+      - name: Configure git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "bot@githubactions.ci"
+
       - run: composer install --no-dev --no-ansi --no-interaction --optimize-autoloader --no-progress
 
       - run: npm clean-install
@@ -37,6 +42,11 @@ jobs:
 
       - name: Remove untracked files
         run: git clean -ffdx
+
+      - name: Commit clean state
+        run: |
+          git add .
+          git commit -m "Clean state"
 
       - name: Create a tarball
         run: git archive --format=tar.gz -o release.tar.gz HEAD

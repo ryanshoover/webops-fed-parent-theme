@@ -1,7 +1,14 @@
+.DS_Store
 /node_modules
 .env
+.editorconfig
 .budfiles
 npm-debug.log
 yarn-error.log
 /.phpunit.result.cache
 /log/*
+/tests
+phpunit.xml
+*.config.js
+jsconfig.json
+.github
