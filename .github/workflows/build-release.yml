@@ -1,0 +1,49 @@
+name: Build and release
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  packages: write
+  contents: write
+
+jobs:
+  configure_env:
+    name: Configure environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+    
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - run: composer install --no-dev --no-ansi --no-interaction --optimize-autoloader --no-progress
+
+      - run: npm clean-install
+      - run: npm run build-production --if-present
+
+  release:
+    name: Release pre-built assets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git ignore cut
+        run: |
+          rm .gitignore
+          mv .gitignore.release .gitignore
+
+      - name: Remove untracked files
+        run: git clean -ffdx
+
+      - name: Create a tarball
+        run: git archive --format=tar.gz -o release.tar.gz HEAD
+
+      - name: Create a Release
+        run: gh release create ${{ github.ref_name }} './release.tar.gz#Compiled theme'
