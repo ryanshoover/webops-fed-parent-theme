@@ -43,7 +43,8 @@
     "roots/acorn": "^4.3"
   },
   "require-dev": {
-    "laravel/pint": "^1.13"
+    "laravel/pint": "^1.13",
+    "phpunit/phpunit": "^11.3"
   },
   "suggest": {
     "log1x/sage-directives": "A collection of useful Blade directives for WordPress and Sage (^1.0)."
@@ -61,5 +62,8 @@
         "App\\Providers\\ThemeServiceProvider"
       ]
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
   }
 }

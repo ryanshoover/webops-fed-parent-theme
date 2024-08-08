@@ -1,0 +1,12 @@
+<phpunit
+	bootstrap="tests/autoload.php"
+>
+	<testsuites>
+		<testsuite name="example">
+			<directory>tests/phpunit</directory>
+		</testsuite>
+	</testsuites>
+	<logging>
+		<junit outputFile="log/junit.xml" />
+	</logging>
+</phpunit>
